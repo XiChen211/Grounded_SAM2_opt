@@ -2,22 +2,22 @@
 optimize grounded_sam2 with tensorrt
 
 
-# Download models
+## Download models
 
 ```bash
 cd checkpoints
 bash download_ckpts.sh 
 ```
 
-# Download onnx models
+## Download onnx models
 
 ```bash
 cd sam2_opt/sam2/checkpoints
 bash download_opt.sh
 ```
-# demo: track_id_demo.py
+## demo: track_id_demo.py
 
-## how to speedup
+### how to speedup
 ```python
     class GroundedSAM2Pipeline:
         def __init__(self, sam2_checkpoint, model_cfg, gdino_model_id, text_query="person.", device="cuda"):
@@ -34,7 +34,7 @@ bash download_opt.sh
         # self.predictor.speedup("torch")   # reset to raw version, which support other model version, such as tiny
 ```
 
-## notice
+### notice
 ```python
     # if you download Grounding DINO model to local, use your own path here.
     if __name__ == "__main__":
