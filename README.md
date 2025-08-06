@@ -31,7 +31,8 @@ bash download_opt.sh
         self.video_predictor.speedup()
         self.image_predictor.speedup()
         # use predictor like raw version
-        # self.predictor.speedup("torch")   # reset to raw version, which support other model version, such as tiny
+        # self.video_predictor.speedup("torch")   # reset to raw version, which support other model version, such as tiny
+        # self.image_predictor.speedup("torch")
 ```
 
 ### notice
