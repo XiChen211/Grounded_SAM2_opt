@@ -5,7 +5,7 @@ optimize grounded_sam2 with tensorrt
 </div>
 
 
-## Download models
+## Download sam2 models
 
 ```bash
 cd checkpoints
