@@ -19,7 +19,10 @@ cd sam2_opt/sam2/checkpoints
 bash download_opt.sh
 ```
 ## demo: track_id_demo.py
-
+### how to run
+```python
+    SAM2_VERSION_TRACK=grounded python track_id_demo.py
+```
 ### how to speedup
 ```python
     class GroundedSAM2Pipeline:
