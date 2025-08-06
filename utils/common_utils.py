@@ -22,6 +22,52 @@ class CommonUtils:
                 print(f"Path '{path}' already exists.")
         except Exception as e:
             print(f"An error occurred while creating the path: {e}")
+    
+    @staticmethod
+    def extract_frames_ffmpeg(video_path, output_dir):
+        """
+        Extracts frames from a video using the ffmpeg command-line tool.
+
+        This method creates a command to convert a video file into a sequence of
+        high-quality JPEG images. It handles directory creation and provides
+        detailed error messages if ffmpeg is not installed or fails during execution.
+
+        Args:
+            video_path (str): The full path to the input video file.
+            output_dir (str): The directory where the extracted frames will be saved.
+        """
+        import subprocess
+
+        os.makedirs(output_dir, exist_ok=True)
+
+        command = [
+            'ffmpeg',
+            '-i', video_path,
+            '-q:v', '2',
+            '-start_number', '0',
+            os.path.join(output_dir, '%06d.jpg')
+        ]
+
+        print(f"Running ffmpeg command: {' '.join(command)}")
+
+        try:
+            subprocess.run(command, check=True, capture_output=True, text=True)
+            
+        except FileNotFoundError:
+            print("\n[FATAL ERROR] `ffmpeg` command not found.")
+            print("Please install ffmpeg on your system and ensure it's in your system's PATH.")
+            print("  - On Debian/Ubuntu: sudo apt-get update && sudo apt-get install -y ffmpeg")
+            print("  - On CentOS/RHEL:   sudo yum install -y ffmpeg")
+            print("  - On macOS (Homebrew): brew install ffmpeg\n")
+            raise
+            
+        except subprocess.CalledProcessError as e:
+            print(f"\n[ERROR] ffmpeg failed with exit code {e.returncode}.")
+            print("This might be due to a corrupted video file or invalid ffmpeg parameters.")
+            print("ffmpeg stderr output:\n---")
+            print(e.stderr)
+            print("---\n")
+            raise
 
     @staticmethod
     def draw_masks_and_box_with_supervision(raw_image_path, mask_path, json_path, output_path):

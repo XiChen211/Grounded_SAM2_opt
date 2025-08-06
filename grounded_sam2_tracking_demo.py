@@ -1,4 +1,12 @@
 import os
+import sys
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+path_to_add = os.path.join(current_dir, 'sam2_opt', 'sam2')
+if path_to_add not in sys.path:
+    sys.path.insert(0, path_to_add)
+
+import os
 import cv2
 import torch
 import numpy as np
@@ -24,19 +32,27 @@ if torch.cuda.get_device_properties(0).major >= 8:
 
 # init sam image predictor and video predictor model
 sam2_checkpoint = "./checkpoints/sam2.1_hiera_large.pt"
-model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
+model_cfg = "sam2.1_hiera_l.yaml"
 
-video_predictor = build_sam2_video_predictor(model_cfg, sam2_checkpoint)
+video_predictor = build_sam2_video_predictor(model_cfg, sam2_checkpoint)  
 sam2_image_model = build_sam2(model_cfg, sam2_checkpoint)
-image_predictor = SAM2ImagePredictor(sam2_image_model)
+image_predictor = SAM2ImagePredictor(sam2_image_model)  # type:SAM2ImagePredictor
+
+video_predictor.speedup()  # speed up the video predictor
+image_predictor.speedup()  # speed up the image predictor
 
 
-# init grounding dino model from huggingface
-model_id = "IDEA-Research/grounding-dino-tiny"
+# # init grounding dino model from huggingface
+# model_id = "IDEA-Research/grounding-dino-tiny"
+# device = "cuda" if torch.cuda.is_available() else "cpu"
+# processor = AutoProcessor.from_pretrained(model_id)
+# grounding_model = AutoModelForZeroShotObjectDetection.from_pretrained(model_id).to(device)
+
+# init grounding dino model from local files
+local_grounding_dino_path = "./checkpoints/grounding-dino-tiny"
 device = "cuda" if torch.cuda.is_available() else "cpu"
-processor = AutoProcessor.from_pretrained(model_id)
-grounding_model = AutoModelForZeroShotObjectDetection.from_pretrained(model_id).to(device)
-
+processor = AutoProcessor.from_pretrained(local_grounding_dino_path)
+grounding_model = AutoModelForZeroShotObjectDetection.from_pretrained(local_grounding_dino_path).to(device)
 
 # setup the input image and text prompt for SAM 2 and Grounding DINO
 # VERY important: text queries need to be lowercased + end with a dot

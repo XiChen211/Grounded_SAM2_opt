@@ -9,7 +9,10 @@ build/*
 _C.*
 outputs/*
 checkpoints/*.pt
+checkpoints/grouonding_dino_tiny/*
 *test*
+tracking_results/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

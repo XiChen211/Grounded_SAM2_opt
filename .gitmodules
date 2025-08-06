@@ -1,0 +1,3 @@
+[submodule "sam2_opt"]
+	path = sam2_opt
+	url = git@wu.github.com:oneflyingfish/sam2_opt.git

@@ -4,6 +4,7 @@ from dds_cloudapi_sdk import Client
 from dds_cloudapi_sdk.tasks.v2_task import V2Task
 
 import os
+
 import torch
 import numpy as np
 from PIL import Image
