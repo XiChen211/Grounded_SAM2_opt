@@ -1,5 +1,8 @@
+<div align="center">
+
 # grounded_sam2_opt
 optimize grounded_sam2 with tensorrt
+</div>
 
 
 ## Download models
