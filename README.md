@@ -1,6 +1,6 @@
 <div align="center">
 
-# grounded_sam2_opt
+# Grounded_SAM2_opt
 
 </div>
 optimize grounded_sam2 with tensorrt
